@@ -4,7 +4,7 @@ Just a sanbox to try out vite
 resources used are linked bellow:
 
 [freeCodeCamp tutorial with React and TS](https://www.freecodecamp.org/news/how-to-migrate-from-create-react-app-to-vite/)
-
+[StackBlitz Vite sandbox](https://vite.dev/guide/#trying-vite-online)
 
 ## Install vite and plugins for react and ts
 
@@ -55,3 +55,6 @@ export default defineConfig(({ command, mode }) => {
   }
 })
 ```
+
+### Vite Types file
+this is for intellisense only. Vite will provide type definitions in vite/client.d.ts
