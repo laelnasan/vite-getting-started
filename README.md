@@ -3,10 +3,13 @@ Just a sanbox to try out vite
 
 resources used are linked bellow:
 
+[vite Getting-Started](https://vite.dev/guide/)
 [freeCodeCamp tutorial with React and TS](https://www.freecodecamp.org/news/how-to-migrate-from-create-react-app-to-vite/)
 [StackBlitz Vite sandbox](https://vite.dev/guide/#trying-vite-online)
 
 ## Install vite and plugins for react and ts
+
+Obs: please install vite globally to use the binary
 
 ```bash
 npm install vite @vitejs/plugin-react vite-tsconfig-paths
@@ -57,4 +60,12 @@ export default defineConfig(({ command, mode }) => {
 ```
 
 ### Vite Types file
-this is for intellisense only. Vite will provide type definitions in vite/client.d.ts
+this is for intellisense only. Vite will provide type definitions in vite/client.d.t
+
+
+### Using [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)
+
+```bash
+# npm 7+, extra double-dash is needed:
+npm create vite@latest my-app -- --template react-ts
+```
