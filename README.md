@@ -1,60 +1,50 @@
-# vite-getting-started
-Just a sanbox to try out vite
+# React + TypeScript + Vite
 
-resources used are linked bellow:
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-[freeCodeCamp tutorial with React and TS](https://www.freecodecamp.org/news/how-to-migrate-from-create-react-app-to-vite/)
-[StackBlitz Vite sandbox](https://vite.dev/guide/#trying-vite-online)
+Currently, two official plugins are available:
 
-## Install vite and plugins for react and ts
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-```bash
-npm install vite @vitejs/plugin-react vite-tsconfig-paths
-```
+## Expanding the ESLint configuration
 
-optional: vite-plugin-svgr transforms svg into React components --- meh... cant find a strong reason to use it for now
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## Vite [config](https://vite.dev/config/) file
+- Configure the top-level `parserOptions` property like this:
 
-vite.config.(js,ts) should contain the configs
-One can use the helper function defineConfig to make sure intellisense (typing info) or custom code runs before returning the config object
-
-```ts
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  // ...
-})
-```
-```ts
-export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
-  if (command === 'serve') {
-    return {
-      // dev specific config
-    }
-  } else {
-    // command === 'build'
-    return {
-      // build specific config
-    }
-  }
-})
-```
-```ts
-import { defineConfig, loadEnv } from 'vite'
-
-export default defineConfig(({ command, mode }) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  const env = loadEnv(mode, process.cwd(), '')
-  return {
-    // vite config
-    define: {
-      __APP_ENV__: JSON.stringify(env.APP_ENV),
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
     },
-  }
+  },
 })
 ```
 
-### Vite Types file
-this is for intellisense only. Vite will provide type definitions in vite/client.d.ts
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
